@@ -5,11 +5,9 @@ $(function () {
   }, 500);
 
   // Displaying previous inputs
-  for (i = 0; i < 24; i++) {
+  for (i = 9; i < 18; i++) {
     var input = '#event-input' + i;
-    console.log(input);
     var output = '#event' + i;
-    console.log(output);
     var savedInput = localStorage.getItem(i);
 
     if (!savedInput) {
@@ -21,7 +19,7 @@ $(function () {
       $(output).show();
     }
   }
-  
+
   // Saving user input
   $('button[type="save"]').on('click', function (event) {
     var clickedButton = event.target;
@@ -31,9 +29,11 @@ $(function () {
     var inputEvent = $(input).val();
 
     localStorage.setItem(inputNumber, inputEvent);
-    $(output).text(inputEvent);
     $(input).hide();
+    $('button[row-number=' + inputNumber + '][type="save"]').hide();
+    $(output).text(inputEvent);
     $(output).show();
+    $('button[row-number=' + inputNumber + '][type="edit"]').show();
   });
 
   // Editing saved input
@@ -45,7 +45,9 @@ $(function () {
     var eventText = $(output).text();
 
     $(output).hide();
+    $('button[row-number=' + inputNumber + '][type="edit"]').hide();
     $(input).val(eventText);
     $(input).show();
+    $('button[row-number=' + inputNumber + '][type="save"]').show();
   });
 });
